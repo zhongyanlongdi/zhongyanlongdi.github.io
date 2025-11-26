@@ -1,0 +1,930 @@
+<html lang="zh-CN"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张涵的小天地 | 个人介绍</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- GSAP 动画库 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFB6C1',
+                        secondary: '#FFD700',
+                        accent: '#FFA07A',
+                        dark: '#4A4A4A',
+                        light: '#FFF5F5',
+                        sky: '#87CEEB',
+                        grass: '#98FB98'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'bounce-slow': 'bounce 2s infinite',
+                        'spin-slow': 'spin 3s linear infinite',
+                        'wiggle': 'wiggle 1s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        wiggle: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            .transition-all-300 {
+                transition: all 0.3s ease;
+            }
+            .bg-gradient-primary {
+                background: linear-gradient(135deg, #FFB6C1 0%, #FFD700 100%);
+            }
+            .bg-gradient-secondary {
+                background: linear-gradient(135deg, #FFA07A 0%, #FFD700 100%);
+            }
+            .cute-border {
+                border: 3px solid #FFB6C1;
+                border-radius: 20px;
+                box-shadow: 0 4px 6px rgba(255, 182, 193, 0.3);
+            }
+            .cute-card {
+                background-color: white;
+                border-radius: 20px;
+                box-shadow: 0 6px 12px rgba(255, 182, 193, 0.2);
+                transition: all 0.3s ease;
+            }
+            .cute-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 10px 20px rgba(255, 182, 193, 0.3);
+            }
+            .star-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='20' height='20' viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z' fill='%23FFD700' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+            .cloud-pattern {
+                background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 35a5 5 0 0 1 5-5h30a5 5 0 0 1 5 5v5a5 5 0 0 1-5 5h-30a5 5 0 0 1-5-5v-5zm-20 25a5 5 0 0 1 5-5h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5h-10a5 5 0 0 1-5-5v-10zm40 0a5 5 0 0 1 5-5h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5h-10a5 5 0 0 1-5-5v-10z' fill='%23FFB6C1' fill-opacity='0.2' fill-rule='evenodd'/%3E%3C/svg%3E");
+            }
+            .btn-cute {
+                background-color: #FFB6C1;
+                color: white;
+                border-radius: 50px;
+                padding: 0.75rem 1.5rem;
+                font-weight: 600;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 6px rgba(255, 182, 193, 0.3);
+            }
+            .btn-cute:hover {
+                background-color: #FFA07A;
+                transform: translateY(-3px);
+                box-shadow: 0 6px 12px rgba(255, 182, 193, 0.4);
+            }
+            .page {
+                display: none;
+                min-height: 100vh;
+                width: 100%;
+                position: relative;
+            }
+            .page.active {
+                display: block;
+            }
+            .nav-btn {
+                transition: all 0.3s ease;
+                border-radius: 50px;
+                padding: 0.5rem 1rem;
+            }
+            .nav-btn:hover, .nav-btn.active {
+                background-color: #FFB6C1;
+                color: white;
+                transform: translateY(-2px);
+            }
+            .heart-icon {
+                color: #FF6B6B;
+                animation: pulse 1.5s infinite;
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.2); }
+                100% { transform: scale(1); }
+            }
+            .sticker {
+                position: absolute;
+                z-index: 10;
+                opacity: 0.8;
+                transition: all 0.3s ease;
+            }
+            .sticker:hover {
+                transform: scale(1.1) rotate(5deg);
+                opacity: 1;
+            }
+            .photo-gallery {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
+                z-index: 1000;
+                overflow-y: auto;
+            }
+            .photo-gallery.active {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+            .gallery-close {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: white;
+                font-size: 30px;
+                cursor: pointer;
+                z-index: 1001;
+            }
+            .gallery-container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 50px 20px;
+            }
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 20px;
+            }
+            .gallery-item {
+                position: relative;
+                overflow: hidden;
+                border-radius: 15px;
+                cursor: pointer;
+                transition: transform 0.3s ease;
+            }
+            .gallery-item:hover {
+                transform: scale(1.05);
+            }
+            .gallery-item img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                transition: transform 0.5s ease;
+            }
+            .gallery-item:hover img {
+                transform: scale(1.1);
+            }
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.9);
+                z-index: 2000;
+                justify-content: center;
+                align-items: center;
+            }
+            .modal.active {
+                display: flex;
+            }
+            .modal-content {
+                max-width: 90%;
+                max-height: 90%;
+            }
+            .modal-content img {
+                max-width: 100%;
+                max-height: 90vh;
+                border-radius: 10px;
+            }
+            .modal-close {
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                color: white;
+                font-size: 40px;
+                cursor: pointer;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light text-dark overflow-x-hidden star-pattern">
+    <!-- 导航按钮组 -->
+    <div class="fixed bottom-6 left-0 right-0 z-50 flex justify-center">
+        <div class="bg-white/90 backdrop-blur-md rounded-full shadow-lg p-2 flex space-x-1 md:space-x-2 overflow-x-auto max-w-full px-2">
+            <button class="nav-btn active flex flex-col items-center px-3 py-2" data-page="home">
+                <i class="fa fa-home text-xl"></i>
+                <span class="text-xs mt-1">首页</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center px-3 py-2" data-page="hobbies">
+                <i class="fa fa-star text-xl"></i>
+                <span class="text-xs mt-1">爱好</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center px-3 py-2" data-page="celebrities">
+                <i class="fa fa-heart text-xl"></i>
+                <span class="text-xs mt-1">明星</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center px-3 py-2" data-page="food">
+                <i class="fa fa-cutlery text-xl"></i>
+                <span class="text-xs mt-1">美食</span>
+            </button>
+            <button class="nav-btn flex flex-col items-center px-3 py-2" data-page="hometown">
+                <i class="fa fa-map-marker text-xl"></i>
+                <span class="text-xs mt-1">家乡</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 首页 -->
+    <div id="home" class="page active relative min-h-screen flex flex-col">
+        <div class="absolute inset-0 z-0">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/a77c2b1022c647188bee94c95a1a4980~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305998&amp;x-signature=QE7jKJJY%2FN7cbxmsYmcbyMqBdpU%3D" alt="小清新背景" class="w-full h-full object-cover">
+        </div>
+        
+        <!-- 可爱贴纸装饰 -->
+        <div class="sticker top-10 left-10 w-20 h-20 animate-float">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/d5a270db01894d078bc639183a94a41c~tplv-a9rns2rl98-image.image?rcl=2025112117014089686655DE76437466CF&amp;rk3s=8e244e95&amp;rrcfp=2609e108&amp;x-expires=1764320505&amp;x-signature=eOCE7T0w47IeNXPLQFAAVuUZpWA%3D" alt="可爱猫咪" class="w-full h-full object-contain">
+        </div>
+        <div class="sticker bottom-24 right-10 w-24 h-24 animate-pulse-slow">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/3a76a5a2c5214edeb522a24eb1a222a4~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=xNO3%2Fgf66eRcyVZTe8aL%2FpQTyiQ%3D" alt="可爱食物" class="w-full h-full object-contain">
+        </div>
+        
+        <div class="container mx-auto px-4 z-10 flex flex-col items-center justify-center min-h-screen text-center">
+            <div class="animate__animated animate__fadeInUp cute-border bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl max-w-md mx-auto">
+                <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/code_assistant/c2bcbb2c7e0840d9b3d85228127f2f95~tplv-a9rns2rl98-image.image?rcl=202511211700291B49EB046E92BDB0D308&amp;rk3s=8e244e95&amp;rrcfp=e75484ac&amp;x-expires=1764320429&amp;x-signature=WHOOwKt%2FGtnyzrXgUzIi%2Fa%2BfNJ0%3D" alt="个人照片" class="w-40 h-40 md:w-48 md:h-48 rounded-full object-cover mx-auto mb-6 border-4 border-primary shadow-lg animate-float">
+                <h1 class="text-3xl md:text-4xl font-bold text-dark mb-4 text-shadow">你好，我是张涵 <span class="heart-icon"><i class="fa fa-heart"></i></span></h1>
+                <p class="text-lg text-dark/80 mb-8">
+                    热爱生活，喜欢探索新事物，追求自我提升的旅程
+                </p>
+                <div class="flex flex-wrap justify-center gap-3 mb-8">
+                    <span class="bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium">前端开发</span>
+                    <span class="bg-secondary/20 text-secondary px-4 py-2 rounded-full text-sm font-medium">摄影爱好者</span>
+                    <span class="bg-accent/20 text-accent px-4 py-2 rounded-full text-sm font-medium">旅行达人</span>
+                    <span class="bg-primary/20 text-primary px-4 py-2 rounded-full text-sm font-medium">美食探索者</span>
+                </div>
+                <p class="text-dark/70 mb-6">
+                    点击下方按钮，了解更多关于我的故事～
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 爱好页面 -->
+    <div id="hobbies" class="page bg-white py-16 md:py-24 relative">
+        <!-- 可爱背景装饰 -->
+        <div class="absolute top-0 left-0 w-full h-40 bg-gradient-to-b from-sky/20 to-transparent"></div>
+        <div class="absolute bottom-0 right-0 w-40 h-40 opacity-20">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/0b401be1b8734936a1dc99bbd03ea5d6~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=2XOY49GASGWg6j1lzpDYp1EPivg%3D" alt="云朵星星" class="w-full h-full object-contain">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">我的爱好 <span class="text-primary">✨</span></h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-dark/70 max-w-2xl mx-auto">
+                    生活中有很多美好的事情值得去探索～这些爱好让我的生活更加丰富多彩！
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 爱好卡片 1 - 摄影（可点击查看更多） -->
+                <div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2 cursor-pointer" id="photography-card">
+                    <div class="h-48 overflow-hidden relative">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/953481554355027979~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779264296&amp;x-signature=%2BUmisf4JqxXgNbUKT2aIN7QsK3g%3D" alt="摄影" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300">
+                            <span class="bg-white text-primary px-4 py-2 rounded-full font-medium">点击查看更多</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-primary text-3xl mb-3">
+                            <i class="fa fa-camera"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dark mb-2">摄影</h3>
+                        <p class="text-dark/70">
+                            用镜头捕捉生活中的美好瞬间，记录世界的每一个精彩角落。我喜欢通过摄影表达自己对生活的独特见解。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 爱好卡片 2 -->
+                <div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/1782176888399986702~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779264296&amp;x-signature=uZzXljFdthydaj7c87TtNuXDZP0%3D" alt="旅行" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-primary text-3xl mb-3">
+                            <i class="fa fa-plane"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dark mb-2">旅行</h3>
+                        <p class="text-dark/70">
+                            探索不同的文化和风景，开阔自己的视野。每一次旅行都是一次心灵的洗礼，让我更加热爱这个世界。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 爱好卡片 3 -->
+                <div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/964130444846432265~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779264296&amp;x-signature=zuo739l%2F3d0gBOdPBzog6GKQ%2Fb8%3D" alt="阅读" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-primary text-3xl mb-3">
+                            <i class="fa fa-book"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dark mb-2">阅读</h3>
+                        <p class="text-dark/70">
+                            书籍是人类进步的阶梯，通过阅读，我可以与伟大的思想对话，拓展自己的思维边界。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 爱好卡片 4 -->
+                <div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p11-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/51577a1263ca453a8d9249b75c9f3490~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269628&x-signature=bhlvdVkejdL%2FkcGkrIIuPTm07yY%3D" alt="编程" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-primary text-3xl mb-3">
+                            <i class="fa fa-code"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dark mb-2">编程</h3>
+                        <p class="text-dark/70">
+                            用代码创造无限可能，解决实际问题。编程不仅是我的职业，也是我热爱的爱好。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 爱好卡片 5 -->
+                 
+<div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+    <div class="h-48 overflow-hidden">
+        <img src="https://p2.ssl.qhimgs1.com/t01554ad6139aaa12f2.jpg" alt="音乐" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+    </div>
+    <div class="p-6">
+        <div class="text-primary text-3xl mb-3">
+            <i class="fa fa-music"></i>
+        </div>
+        <h3 class="text-xl font-bold text-dark mb-2">音乐</h3>
+        <p class="text-dark/70">
+            音乐是心灵的语言，无论是欣赏还是创作，都能带给我无尽的快乐和灵感。
+        </p>
+    </div>
+</div>
+                
+                <!-- 爱好卡片 6 -->
+                <div class="cute-card overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="h-48 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-be4g95zd3a/903084975042330657~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269628&x-signature=BwRrdPQu88AG3DlSBfy3TcLUC1U%3D" alt="烹饪" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="text-primary text-3xl mb-3">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-dark mb-2">烹饪</h3>
+                        <p class="text-dark/70">
+                            烹饪是一门艺术，我喜欢尝试不同的食谱，为家人和朋友准备美味的饭菜。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 喜欢的明星页面 -->
+    <div id="celebrities" class="page bg-gradient-to-b from-light to-white py-16 md:py-24 relative">
+        <!-- 可爱背景装饰 -->
+        <div class="absolute top-20 right-10 w-32 h-32 opacity-20 animate-float">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53f7d48228084ae091be46e1b1503ae3~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=5YTUfDnuq9YmhAv78PRX0WNs0%2Bo%3D" alt="可爱猫咪" class="w-full h-full object-contain">
+        </div>
+        <div class="absolute bottom-20 left-10 w-24 h-24 opacity-20 animate-pulse-slow">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/0b401be1b8734936a1dc99bbd03ea5d6~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=2XOY49GASGWg6j1lzpDYp1EPivg%3D" alt="云朵星星" class="w-full h-full object-contain">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">我喜欢的明星 <span class="text-primary"><i class="fa fa-heart"></i></span></h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-dark/70 max-w-2xl mx-auto">
+                    这些明星不仅有着出色的才华，更有着令人钦佩的品质，他们的作品给我带来了很多快乐和启发～
+                </p>
+            </div>
+            
+            <div class="gri <d grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- 明星卡片 1 - BLACKPINK -->
+                <div class="cute-card flex flex-col md:flex-row overflow-hidden">
+                    <div class="md:w-2/5 h-64 md:h-auto overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/0c6ca8825ede900dc9a57dc8b450d9ce~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269592&x-signature=JML4TznYlLMj3DI8h9mIjvOXYbs%3D" alt="BLACKPINK" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="md:w-3/5 p-6">
+                        <div class="flex items-center mb-3">
+                            <h3 class="text-xl font-bold text-dark">BLACKPINK</h3>
+                            <span class="ml-3 bg-primary/20 text-primary text-xs px-3 py-1 rounded-full">韩国女团</span>
+                        </div>
+                        <p class="text-dark/70 mb-4">
+                            韩国YG娱乐旗下的四人女子组合，由Jisoo、Jennie、Rosé和Lisa组成。她们的音乐充满活力，舞台表演极具魅力，是全球最受欢迎的K-POP女团之一。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《How You Like That》</span>
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《Kill This Love》</span>
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《Pink Venom》</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 明星卡片 2 - BABYMONSTER -->
+                <div class="cute-card flex flex-col md:flex-row overflow-hidden">
+                    <div class="md:w-2/5 h-64 md:h-auto overflow-hidden">
+                        <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-xv4ileqgde/cedddd38bfbe4be1a11b1ca53ab88b2f~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269592&x-signature=tEHc8mg%2Bg9OmzrYdG%2F425ydrEco%3D" alt="BABYMONSTER" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="md:w-3/5 p-6">
+                        <div class="flex items-center mb-3">
+                            <h3 class="text-xl font-bold text-dark">BABYMONSTER</h3>
+                            <span class="ml-3 bg-primary/20 text-primary text-xs px-3 py-1 rounded-full">韩国女团</span>
+                        </div>
+                        <p class="text-dark/70 mb-4">
+                            YG娱乐于2023年推出的七人女子组合，是BLACKPINK的师妹团。她们凭借出色的唱功和舞蹈实力，一出道就受到了广泛关注和喜爱。
+                        </p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《Batter Up》</span>
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《Stuck In The Middle》</span>
+                            <span class="bg-gray-100 text-dark/70 text-xs px-2 py-1 rounded">《DREAM》</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 喜欢的美食页面 -->
+    <div id="food" class="page bg-white py-16 md:py-24 relative">
+        <!-- 可爱背景装饰 -->
+        <div class="absolute top-10 left-10 w-32 h-32 opacity-20 animate-float">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/3a76a5a2c5214edeb522a24eb1a222a4~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=xNO3%2Fgf66eRcyVZTe8aL%2FpQTyiQ%3D" alt="可爱食物" class="w-full h-full object-contain">
+        </div>
+        <div class="absolute bottom-10 right-10 w-24 h-24 opacity-20 animate-pulse-slow">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53f7d48228084ae091be46e1b1503ae3~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=5YTUfDnuq9YmhAv78PRX0WNs0%2Bo%3D" alt="可爱猫咪" class="w-full h-full object-contain">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">我喜欢的美食 <span class="text-primary">🍔</span></h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-dark/70 max-w-2xl mx-auto">
+                    美食是生活中不可或缺的一部分，这些是我最喜欢的美食，每一种都有特别的回忆～
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- 美食卡片 1 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p0.ssl.qhimgs1.com/sdr/400__/t0467ff1553632eb2b0.jpg" alt="火锅" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">火锅</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">我的最爱</span>
+                        </div>
+                        <p class="text-dark/70">
+                            火锅是我最喜欢的美食之一，尤其是在寒冷的冬天，和朋友一起吃火锅真的是一种享受。我最喜欢麻辣火锅和番茄火锅！
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 美食卡片 2 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p0.ssl.qhimgs1.com/sdr/400__/t016e64af74a4430efe.jpg" alt="烧烤" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">烧烤</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">周末必备</span>
+                        </div>
+                        <p class="text-dark/70">
+                            夏天的夜晚，和朋友一起去吃烧烤，配上冰镇啤酒，真的是太幸福了！我最喜欢烤羊肉串和烤茄子。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 美食卡片 3 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p2.ssl.qhimgs1.com/sdr/400__/t019709d322ce129ffc.jpg" alt="寿司" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">寿司</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">偶尔享用</span>
+                        </div>
+                        <p class="text-dark/70">
+                            寿司的精致和美味让我无法抗拒。新鲜的食材和精湛的制作工艺，每一口都是一种享受。我最喜欢三文鱼寿司和加州卷。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 美食卡片 4 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p0.ssl.qhimgs1.com/sdr/400__/t0494b37541ef31f424.jpg" alt="奶茶" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">奶茶</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">日常饮品</span>
+                        </div>
+                        <p class="text-dark/70">
+                            奶茶是我的快乐源泉，无论是学习还是工作，一杯奶茶都能让我心情愉悦。我最喜欢珍珠奶茶和抹茶拿铁。
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 美食卡片 5 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p0.ssl.qhimgs1.com/sdr/400__/t0403979ef914389af0.jpg" alt="蛋糕" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">蛋糕</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">甜点首选</span>
+                        </div>
+                        <p class="text-dark/70">
+                            每当心情低落的时候，一块美味的蛋糕就能让我重新振作起来。我最喜欢草莓蛋糕和巧克力蛋糕！
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 美食卡片 6 -->
+                <div class="cute-card overflow-hidden">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://p1.ssl.qhimgs1.com/sdr/400__/t014b2b1d411fca2127.jpg" alt="早餐" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">营养早餐</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-half-o"></i>
+                            </div>
+                            <span class="text-dark/60 text-sm ml-2">活力源泉</span>
+                        </div>
+                        <p class="text-dark/70">
+                            早餐是一天中最重要的一餐，我喜欢准备营养均衡的早餐，开启充满活力的一天！
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 家乡页面 -->
+    <div id="hometown" class="page bg-gradient-to-b from-sky/10 to-white py-16 md:py-24 relative">
+        <!-- 可爱背景装饰 -->
+        <div class="absolute top-20 left-10 w-32 h-32 opacity-20 animate-float">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/0b401be1b8734936a1dc99bbd03ea5d6~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=2XOY49GASGWg6j1lzpDYp1EPivg%3D" alt="云朵星星" class="w-full h-full object-contain">
+        </div>
+        <div class="absolute bottom-20 right-10 w-24 h-24 opacity-20 animate-pulse-slow">
+            <img src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/53f7d48228084ae091be46e1b1503ae3~tplv-a9rns2rl98-image.image?rcl=2025112116323854CFDFD7BD727B5DA03F&amp;rk3s=8e244e95&amp;rrcfp=f06b921b&amp;x-expires=1766305999&amp;x-signature=5YTUfDnuq9YmhAv78PRX0WNs0%2Bo%3D" alt="可爱猫咪" class="w-full h-full object-contain">
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-dark mb-4">我的家乡 - 浙江台州 <span class="text-primary">🏠</span></h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-lg text-dark/70 max-w-2xl mx-auto">
+                    台州是一座美丽的沿海城市，拥有丰富的自然资源和独特的文化底蕴，这里是我出生和成长的地方～
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+                <div class="cute-card overflow-hidden">
+                    <div class="h-80 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/fc52808acac8167e161157aef5c3d2df~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=f54tH8e9lzHNGu9a0rFr64Gne54%3D" alt="台州风景" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">山海台州</h3>
+                        <p class="text-dark/70">
+                            台州依山傍海，风景秀丽。这里有天台山、神仙居等著名景区，也有温岭长屿硐天、临海古城等历史文化遗迹。四季分明，气候宜人，是一个宜居宜游的好地方。
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="cute-card overflow-hidden">
+                    <div class="h-80 overflow-hidden">
+                        <img src="https://p26-doubao-search-sign.byteimg.com/labis/90747e02b5a7237f45306141a9efb683~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=2yPupM9u5N3GZGYFCQWmn%2BmupJQ%3D" alt="台州海湾" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-dark mb-2">美丽海湾</h3>
+                        <p class="text-dark/70">
+                            台州拥有漫长的海岸线，三门湾、台州湾、乐清湾三大海湾环绕。这里的海水清澈，沙滩细腻，是夏日避暑的绝佳去处。小时候，我经常和家人一起去海边玩耍，留下了许多美好的回忆。
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cute-card p-8 mb-12">
+                <h3 class="text-2xl font-bold text-dark mb-6 text-center">家乡的特色</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="text-center p-4 rounded-xl bg-light hover:bg-primary/10 transition-colors duration-300">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-tree"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-dark mb-2">自然风光</h4>
+                        <p class="text-dark/70 text-sm">
+                            青山绿水，鸟语花香，纯天然的氧吧
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-4 rounded-xl bg-light hover:bg-primary/10 transition-colors duration-300">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-cutlery"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-dark mb-2">特色美食</h4>
+                        <p class="text-dark/70 text-sm">
+                            地道的农家菜，新鲜的土特产
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-4 rounded-xl bg-light hover:bg-primary/10 transition-colors duration-300">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-users"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-dark mb-2">热情村民</h4>
+                        <p class="text-dark/70 text-sm">
+                            朴实善良，热情好客的乡亲们
+                        </p>
+                    </div>
+                    
+                    <div class="text-center p-4 rounded-xl bg-light hover:bg-primary/10 transition-colors duration-300">
+                        <div class="text-primary text-4xl mb-4">
+                            <i class="fa fa-history"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-dark mb-2">历史文化</h4>
+                        <p class="text-dark/70 text-sm">
+                            悠久的历史，丰富的文化底蕴
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 台州特色美食部分 -->
+            <div class="cute-card p-8 mb-12">
+                <h3 class="text-2xl font-bold text-dark mb-6 text-center">台州特色美食</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="cute-card overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-qvj2lq49k0/7485355b582145d6804b8a4df93a7700~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269592&x-signature=cHnLajLJbJNO0%2FIvM49IttPJ%2FmA%3D" alt="台州小吃" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="text-lg font-bold text-dark mb-2">台州小吃</h4>
+                            <p class="text-dark/70 text-sm">
+                                台州的小吃种类繁多，有温岭嵌糕、临海麦虾、黄岩蜜橘等，每一种都让人回味无穷。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="cute-card overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p3-doubao-search-sign.byteimg.com/tos-cn-i-qvj2lq49k0/db73cc387fad4060a73c05503cfd3246~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269592&x-signature=EMgS1aq1IAwM6tpjh8DdB%2B6568o%3D" alt="海鲜美食" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="text-lg font-bold text-dark mb-2">海鲜美食</h4>
+                            <p class="text-dark/70 text-sm">
+                                作为沿海城市，台州的海鲜新鲜美味，尤其是三门青蟹、温岭文蛤等，是不可错过的美食。
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="cute-card overflow-hidden">
+                        <div class="h-48 overflow-hidden">
+                            <img src="https://p11-doubao-search-sign.byteimg.com/labis/image/9f450a81b6d313b199a72d7923ff4451~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&x-expires=1779269592&x-signature=YU%2BHXIZAjRZQhZVmk9MqViizhqQ%3D" alt="传统糕点" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h4 class="text-lg font-bold text-dark mb-2">传统糕点</h4>
+                            <p class="text-dark/70 text-sm">
+                                台州的传统糕点如桐子叶包米糕、麻糍等，口感独特，承载着浓厚的乡土气息和文化记忆。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="cute-card p-8">
+                <h3 class="text-2xl font-bold text-dark mb-6 text-center">我的思乡之情</h3>
+                <p class="text-dark/80 text-lg leading-relaxed text-center max-w-3xl mx-auto">
+                    虽然现在我在城市里工作和生活，但我永远不会忘记生我养我的家乡台州。那里有我最美好的童年回忆，有我最亲爱的家人和朋友，还有那让我念念不忘的特色美食。每当我感到疲惫或迷茫的时候，我就会想起台州的山山水水，想起那里的宁静和美好，这总能给我带来力量和安慰。
+                </p>
+                <div class="mt-8 text-center">
+                    <button class="btn-cute inline-flex items-center">
+                        <i class="fa fa-heart mr-2"></i> 我爱我的家乡台州
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 摄影作品画廊 -->
+    <div id="photo-gallery" class="photo-gallery">
+        <div class="gallery-close">
+            <i class="fa fa-times"></i>
+        </div>
+        <div class="gallery-container">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center">我的摄影作品</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://p26-doubao-search-sign.byteimg.com/labis/fc52808acac8167e161157aef5c3d2df~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=f54tH8e9lzHNGu9a0rFr64Gne54%3D" alt="风景摄影1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p26-doubao-search-sign.byteimg.com/labis/90747e02b5a7237f45306141a9efb683~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=2yPupM9u5N3GZGYFCQWmn%2BmupJQ%3D" alt="风景摄影2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-qvj2lq49k0/73de23009bb44317a90c2fa580696343~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=1LilLD6gtkCKZcJ4dBxsa%2B3dcf4%3D" alt="风景摄影3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p26-doubao-search-sign.byteimg.com/tos-cn-i-qvj2lq49k0/831a61a79a284fca8b64002eff733b33~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266013&amp;x-signature=6sFUw8djPrPcfFtI9xiFIjtS0wU%3D" alt="风景摄影4">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/c07e8a9d4e0d1e292a0d87825e3dcb9f~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=fc8%2B%2BmuLIRhot3xsSmH%2FXpGZ3Hc%3D" alt="人像摄影1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/d2f6cee60296e662e2d3e828ebbfefc0~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=tgUi%2FINUcj1tNvm8KA0RcFAJ5f0%3D" alt="人像摄影2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/40ee6d9b876b0480fb03fa663571f7db~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=LECFKWqkRbk%2BqXG86c8%2Fxx5DF%2FQ%3D" alt="人像摄影3">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/e100fe17ea873d22c818b14d3c886d46~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=P3JTryVj%2Bf4F57h4nVPW0Q5pWa8%3D" alt="美食摄影1">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/866be9b1db29cf265e1688902c6e926c~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=Tm0t9qNmSPLWwWUN8ONxXNt%2FlTQ%3D" alt="美食摄影2">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://p11-doubao-search-sign.byteimg.com/labis/2f87ed165a2e77a211915d2057e49d99~tplv-be4g95zd3a-image.jpeg?rk3s=542c0f93&amp;x-expires=1779266012&amp;x-signature=QX3ejgLjH6de6ikZcQ8chjUvFdE%3D" alt="美食摄影3">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 图片查看模态框 -->
+    <div id="image-modal" class="modal">
+        <span class="modal-close">×</span>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="大图预览">
+        </div>
+    </div>
+
+    <script>
+        // 页面切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const navBtns = document.querySelectorAll('.nav-btn');
+            const pages = document.querySelectorAll('.page');
+            
+            // 导航按钮点击事件
+            navBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const targetPage = this.getAttribute('data-page');
+                    
+                    // 更新按钮状态
+                    navBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 更新页面显示
+                    pages.forEach(page => {
+                        if (page.id === targetPage) {
+                            // 使用GSAP动画显示页面
+                            gsap.fromTo(page, 
+                                { opacity: 0, y: 20 },
+                                { opacity: 1, y: 0, duration: 0.5, onStart: () => page.classList.add('active') }
+                            );
+                        } else {
+                            page.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // 摄影卡片点击事件
+            const photographyCard = document.getElementById('photography-card');
+            const photoGallery = document.getElementById('photo-gallery');
+            const galleryClose = document.querySelector('.gallery-close');
+            
+            photographyCard.addEventListener('click', function() {
+                photoGallery.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+            
+            galleryClose.addEventListener('click', function() {
+                photoGallery.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // 点击画廊外部关闭
+            photoGallery.addEventListener('click', function(e) {
+                if (e.target === photoGallery) {
+                    photoGallery.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+            
+            // 图片点击放大功能
+            const galleryItems = document.querySelectorAll('.gallery-item');
+            const imageModal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalClose = document.querySelector('.modal-close');
+            
+            galleryItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const imgSrc = this.querySelector('img').src;
+                    modalImg.src = imgSrc;
+                    imageModal.classList.add('active');
+                });
+            });
+            
+            modalClose.addEventListener('click', function() {
+                imageModal.classList.remove('active');
+            });
+            
+            // 点击模态框外部关闭
+            imageModal.addEventListener('click', function(e) {
+                if (e.target === imageModal) {
+                    imageModal.classList.remove('active');
+                }
+            });
+            
+            // 为所有卡片添加动画效果
+            const cuteCards = document.querySelectorAll('.cute-card');
+            cuteCards.forEach((card, index) => {
+                gsap.fromTo(card,
+                    { opacity: 0, y: 30 },
+                    { 
+                        opacity: 1, 
+                        y: 0, 
+                        duration: 0.6, 
+                        delay: index * 0.1,
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top bottom-=100",
+                            toggleActions: "play none none none"
+                        }
+                    }
+                );
+            });
+        });
+    </script>
+
+</body></html>
